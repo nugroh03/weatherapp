@@ -122,6 +122,7 @@ class _FirstPageState extends State<FirstPage> {
             MaterialPageRoute(
                 builder: (context) => SecondPage(
                       city: _kecamatanController.text,
+                      name: _namaLengkapController.text,
                     )),
           );
         });
