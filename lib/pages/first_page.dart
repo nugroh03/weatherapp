@@ -474,19 +474,20 @@ class _FirstPageState extends State<FirstPage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Container(
+            height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Form(
                   key: formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       SizedBox(
                         height: 85,
                       ),
                       Container(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -501,46 +502,66 @@ class _FirstPageState extends State<FirstPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        'adalah aplikasi perkiraan cuaca untuk beberapa hari kedepan.',
-                        style: TextStyle(
-                          fontSize: 16,
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Text(
+                          'adalah aplikasi perkiraan cuaca untuk beberapa hari kedepan.',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Isi data untuk dapat melanjutkan!',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      inputlogin(),
                       SizedBox(
                         height: 20,
                       ),
                       Container(
-                        height: 60,
-                        child: Center(
-                            child: isLoading
-                                ? Container(
-                                    height: 16,
-                                    width: 16,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor:
-                                          AlwaysStoppedAnimation(thirdColor),
-                                    ),
-                                  )
-                                : signin()),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Text(
+                          'Isi data untuk dapat melanjutkan!',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                       SizedBox(
-                        height: 80,
+                        height: 30,
                       ),
+                      Container(
+                        height: MediaQuery.of(context).size.height - (270),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20))),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 50,
+                            ),
+                            inputlogin(),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: 60,
+                              child: Center(
+                                  child: isLoading
+                                      ? Container(
+                                          height: 16,
+                                          width: 16,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            valueColor: AlwaysStoppedAnimation(
+                                                thirdColor),
+                                          ),
+                                        )
+                                      : signin()),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
