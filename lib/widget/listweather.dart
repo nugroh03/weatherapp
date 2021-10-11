@@ -16,7 +16,7 @@ class ListWeather extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(time!),
+          Text(time!, style: TextStyle(color: Colors.white)),
           Container(
             height: 40,
             width: 40,
@@ -26,7 +26,10 @@ class ListWeather extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(suhu!),
+              Text(
+                suhu!,
+                style: TextStyle(color: Colors.white),
+              ),
               SizedBox(
                 width: 5,
               ),
@@ -39,11 +42,11 @@ class ListWeather extends StatelessWidget {
                   children: [
                     Text(
                       'o',
-                      style: TextStyle(fontSize: 8),
+                      style: TextStyle(fontSize: 8, color: Colors.white),
                     ),
                     Text(
                       'C',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 14, color: Colors.white),
                     ),
                   ],
                 ),

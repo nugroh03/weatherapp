@@ -1,12 +1,16 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:weather_app/constans.dart';
 import 'package:weather_app/model/weather_model.dart';
 import 'package:weather_app/model/weathertoday_model.dart';
 import 'package:weather_app/service/weather.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_app/widget/detailtoday.dart';
 import 'package:weather_app/widget/listweather.dart';
 
 class SecondPage extends StatefulWidget {
@@ -24,7 +28,8 @@ class _SecondPageState extends State<SecondPage> {
   List<WeatherModel?>? weather5day;
   Map? days;
   String? dayNow;
-  late String tempCelcius;
+  String? tempCelcius;
+  String? welcome;
   bool isLoading = true;
   List<String?>? listday = [];
 
@@ -54,15 +59,34 @@ class _SecondPageState extends State<SecondPage> {
     });
   }
 
+  String greetingMessage() {
+    var timeNow = DateTime.now().hour;
+    if (timeNow <= 12) {
+      return 'Selamat Pagi';
+    } else if ((timeNow > 12) && (timeNow <= 16)) {
+      return 'Selamat Siang';
+    } else if ((timeNow > 16) && (timeNow < 20)) {
+      return 'Selamat Sore';
+    } else {
+      return 'Selamat Malam';
+    }
+  }
+
   getToday(daynow) {
     final daynow1 = daynow; // timestamp in seconds
     final DateTime date1 = DateTime.fromMillisecondsSinceEpoch(daynow1 * 1000);
-    var format =
-        new DateFormat('EEEE ,MMMM dd,yyyy '); // 'hh:mm' for hour & min
+    var format = new DateFormat('EEEE ,MMMM dd,yyyy ');
+    // 'hh:mm' for hour & min
     var daynows = format.format(date1);
+    var format2 = new DateFormat('hh');
+    int toWelcome = int.parse(format2.format(date1));
+
+    print("coba" + toWelcome.toString());
+
     setState(() {
       dayNow = daynows.toString();
       tempCelcius = (weathertoday!.main!["temp"] - 273.15).toStringAsFixed(2);
+      welcome = greetingMessage();
     });
   }
 
@@ -77,15 +101,13 @@ class _SecondPageState extends State<SecondPage> {
 
   void get5day(city) {
     WeatherService().weather5day(city).then((value) {
-      //print("5days" + value.toString());
-
       Map newdays = {};
       List<WeatherModel?> dayss = [];
       WeatherModel getdt = value![0]!;
       int dt = getdt.dt!;
       String day = getDay(dt);
       listday!.add(day);
-      print("dayss" + day);
+
       for (var i = 0; i < value.length; i++) {
         WeatherModel item = value[i]!;
         String timestamp = getDay(item.dt!);
@@ -100,7 +122,6 @@ class _SecondPageState extends State<SecondPage> {
         newdays[timestamp] = dayss;
       }
 
-      print("dayss" + newdays.toString());
       setState(() {
         weather5day = value;
         days = newdays;
@@ -113,8 +134,12 @@ class _SecondPageState extends State<SecondPage> {
   Widget build(BuildContext context) {
     Widget header() {
       return Container(
+        height: 50,
+        padding: EdgeInsets.symmetric(horizontal: 25),
         margin: EdgeInsets.only(top: 20),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               child: Icon(Icons.arrow_back_ios),
@@ -123,14 +148,34 @@ class _SecondPageState extends State<SecondPage> {
               child: Container(
                 child: Column(
                   children: [
-                    Text(widget.city.toString()),
-                    Text(dayNow.toString())
+                    Text(
+                      widget.city.toString(),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text(dayNow.toString(),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.normal))
                   ],
                 ),
               ),
             ),
             Container(
-              child: Icon(Icons.refresh),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (context) => SecondPage(
+                              name: widget.name,
+                              city: widget.city,
+                            )));
+                  });
+                },
+                child: Icon(
+                  Icons.refresh,
+                  size: 30,
+                ),
+              ),
             )
           ],
         ),
@@ -139,6 +184,7 @@ class _SecondPageState extends State<SecondPage> {
 
     Widget toDay() {
       return Container(
+        padding: EdgeInsets.only(right: 30, left: 10),
         child: Row(
           children: [
             Expanded(
@@ -150,7 +196,7 @@ class _SecondPageState extends State<SecondPage> {
                         alignment: Alignment.bottomCenter,
                         height: 50,
                         child: Text(
-                          'Selamat Sore, ${widget.name}',
+                          '$welcome, ${widget.name}',
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )),
@@ -161,7 +207,8 @@ class _SecondPageState extends State<SecondPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(tempCelcius, style: TextStyle(fontSize: 50)),
+                              Text(tempCelcius!,
+                                  style: TextStyle(fontSize: 50)),
                               SizedBox(
                                 width: 5,
                               ),
@@ -227,7 +274,11 @@ class _SecondPageState extends State<SecondPage> {
             children: [
               Container(
                 constraints: BoxConstraints(minWidth: 60),
-                child: Text(listday![index]!),
+                child: Text(listday![index]!,
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
               ),
               SizedBox(
                 width: 30,
@@ -264,46 +315,169 @@ class _SecondPageState extends State<SecondPage> {
       );
     }
 
+    Widget buttonSheet() {
+      return SizedBox.expand(
+        child: DraggableScrollableSheet(
+            initialChildSize: 0.12,
+            minChildSize: 0.12,
+            maxChildSize: 0.7,
+            builder: (BuildContext c, s) {
+              return Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 10,
+                    ),
+                  ],
+                ),
+                child: ListView(
+                  controller: s,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Container(
+                                    height: 10,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(5)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Center(
+                                  child: Container(
+                                      height: 40,
+                                      child: Column(
+                                        children: [
+                                          Text("Geser ke atas",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white)),
+                                          Text("Perkiraan Cuaca 5 Hari Kedepan",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white))
+                                        ],
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (listday!.length > 0) menuDay(0),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (listday!.length > 0) menuDay(1),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (listday!.length > 0) menuDay(2),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (listday!.length > 0) menuDay(3),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    if (listday!.length > 0) menuDay(4)
+                  ],
+                ),
+              );
+            }),
+      );
+    }
+
+    Widget detailToday() {
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+            color: Color(0xffCEE2F4), borderRadius: BorderRadius.circular(10)),
+        alignment: Alignment.center,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            DetailToday(
+                image: "assets/icon_humidity.png",
+                value: weathertoday!.main!["humidity"].toString(),
+                satuan: " %",
+                title: "Humidity"),
+            DetailToday(
+                image: "assets/icon_pressure.png",
+                value: weathertoday!.main!["pressure"].toString(),
+                satuan: " hpa",
+                title: "Pressure"),
+            DetailToday(
+                image: "assets/icon_cloudy.png",
+                value: weathertoday!.clouds!["all"].toString(),
+                satuan: " %",
+                title: "Cloudiness"),
+            DetailToday(
+                image: "assets/icon_wind.png",
+                value: weathertoday!.wind!["speed"].toString(),
+                satuan: " m/s",
+                title: "Wind"),
+          ],
+        ),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
-        body: !isLoading
-            ? SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Column(
-                    children: [
-                      header(),
-                      SizedBox(
-                        height: 30,
+        body: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover, image: AssetImage("assets/bg.png"))),
+          child: !isLoading
+              ? Scaffold(
+                  backgroundColor: Colors.transparent,
+                  appBar: PreferredSize(
+                      child: header(), preferredSize: Size.fromHeight(80)),
+                  body: Stack(children: [
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                          ),
+                          toDay(),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          detailToday(),
+                        ],
                       ),
-                      toDay(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      if (listday!.length > 0) menuDay(0),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      if (listday!.length > 0) menuDay(1),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      if (listday!.length > 0) menuDay(2),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      if (listday!.length > 0) menuDay(3),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      if (listday!.length > 0) menuDay(4)
-                    ],
-                  ),
+                    ),
+                    Positioned(child: buttonSheet())
+                  ]))
+              : Center(
+                  child: CircularProgressIndicator(),
                 ),
-              )
-            : Center(
-                child: CircularProgressIndicator(),
-              ),
+        ),
       ),
     );
   }

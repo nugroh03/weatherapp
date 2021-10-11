@@ -74,9 +74,7 @@ class _FirstPageState extends State<FirstPage> {
     //                                     provinceId.toLowerCase()));
     //var regenciesJson = regencies as List;
 
-    print("first" + dataregency.toString());
     List firstregency = dataregency.toList();
-    print("firskec" + firstregency.toString());
 
     for (int i = 0; i < firstregency.length; i++) {
       regenciesData.add(new RegenciesModel.fromJson(firstregency[i]));
@@ -143,6 +141,7 @@ class _FirstPageState extends State<FirstPage> {
             MaterialPageRoute(
                 builder: (context) => SecondPage(
                       city: _kecamatanController.text,
+                      name: _namaLengkapController.text,
                     )),
           );
         });
@@ -164,7 +163,7 @@ class _FirstPageState extends State<FirstPage> {
 
     Widget signin() {
       return ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Color(0xff1F7FEF)),
+          style: ElevatedButton.styleFrom(primary: primaryColor),
           onPressed: () {
             final isValid = formKey.currentState?.validate();
 
@@ -221,7 +220,7 @@ class _FirstPageState extends State<FirstPage> {
                             textStyleHighlight:
                                 TextStyle(fontWeight: FontWeight.w700),
                           ),
-                          subtitle: Text("This is subtitle"),
+
                           onTap: () {
                             onSelected(option);
                             setState(() {
@@ -230,7 +229,6 @@ class _FirstPageState extends State<FirstPage> {
                             _kecamatanController.text = "";
                             regenciesData = [];
                             fetchRegencies(province_id);
-                            print(province_id.toString());
                           },
                         );
                       },
@@ -241,9 +239,7 @@ class _FirstPageState extends State<FirstPage> {
                 ),
               );
             },
-            onSelected: (selectedString) {
-              print(selectedString);
-            },
+            onSelected: (selectedString) {},
             fieldViewBuilder:
                 (context, _kotaController, focusNode, onEditingComplete) {
               this._kotaController = _kotaController;
@@ -272,19 +268,22 @@ class _FirstPageState extends State<FirstPage> {
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                           hintText: 'Pilih Kota',
-                          hintStyle: TextStyle(fontSize: 16),
+                          hintStyle: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
                           suffixIcon: Icon(Icons.arrow_drop_down),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide(
-                              color: Color(0xffC3C3C3),
+                              color: Colors.black,
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide(
-                              color: Color(0xffC3C3C3),
-                              width: 2.0,
+                              color: Colors.black,
+                              width: 1.0,
                             ),
                           ),
                         ),
@@ -336,7 +335,7 @@ class _FirstPageState extends State<FirstPage> {
                             textStyleHighlight:
                                 TextStyle(fontWeight: FontWeight.w700),
                           ),
-                          subtitle: Text("This is subtitle"),
+
                           onTap: () {
                             onSelected(option);
                           },
@@ -349,9 +348,7 @@ class _FirstPageState extends State<FirstPage> {
                 ),
               );
             },
-            onSelected: (selectedString) {
-              print(selectedString);
-            },
+            onSelected: (selectedString) {},
             fieldViewBuilder:
                 (context, _kecamatanController, focusNode, onEditingComplete) {
               this._kecamatanController = _kecamatanController;
@@ -385,14 +382,14 @@ class _FirstPageState extends State<FirstPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide(
-                              color: Color(0xffC3C3C3),
+                              color: Colors.black,
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             borderSide: BorderSide(
-                              color: Color(0xffC3C3C3),
-                              width: 2.0,
+                              color: Colors.black,
+                              width: 1.0,
                             ),
                           ),
                         ),
@@ -431,14 +428,14 @@ class _FirstPageState extends State<FirstPage> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
-                      color: Color(0xffC3C3C3),
+                      color: Colors.black,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
-                      color: Color(0xffC3C3C3),
-                      width: 2.0,
+                      color: Colors.black,
+                      width: 1.0,
                     ),
                   ),
                 ),
@@ -465,65 +462,88 @@ class _FirstPageState extends State<FirstPage> {
       );
     }
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 85,
-                ),
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                colorFilter: new ColorFilter.mode(
+                    Colors.white.withOpacity(0.95), BlendMode.dstATop),
+                fit: BoxFit.cover,
+                image: AssetImage("assets/bg_login.jpg"))),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Container(
+            child: SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 85,
+                      ),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Weather App',
+                              style: TextStyle(
+                                  fontSize: 48, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
-                        'Weather\nApp',
+                        'adalah aplikasi perkiraan cuaca untuk beberapa hari kedepan.',
                         style: TextStyle(
-                            fontSize: 48, fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Isi data untuk dapat melanjutkan!',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      inputlogin(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 60,
+                        child: Center(
+                            child: isLoading
+                                ? Container(
+                                    height: 16,
+                                    width: 16,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor:
+                                          AlwaysStoppedAnimation(thirdColor),
+                                    ),
+                                  )
+                                : signin()),
+                      ),
+                      SizedBox(
+                        height: 80,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Isi data untuk dapat melanjutkan!',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                inputlogin(),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  height: 60,
-                  child: Center(
-                      child: isLoading
-                          ? Container(
-                              height: 16,
-                              width: 16,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation(thirdColor),
-                              ),
-                            )
-                          : signin()),
-                ),
-                SizedBox(
-                  height: 80,
-                ),
-              ],
+              ),
             ),
           ),
         ),

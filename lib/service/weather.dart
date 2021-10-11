@@ -31,7 +31,7 @@ class WeatherService {
         //print("weather" + weather.toString());
         return weather;
       } else {
-        throw Exception('Gagal Get News');
+        throw Exception('Gagal mengambil data cuaca');
       }
     } on Exception catch (e) {
       print(e.toString());
@@ -51,24 +51,22 @@ class WeatherService {
         //headers: headers,
       );
 
-
       if (response.statusCode == 200) {
         Map data = jsonDecode(response.body);
         List<dynamic> weather = data["list"];
         List<WeatherModel> newWeather = [];
 
         for (var item in weather) {
-        newWeather.add(WeatherModel?.fromJson(item));
-      }
+          newWeather.add(WeatherModel?.fromJson(item));
+        }
 
-       
         // for (var item in data) {
         //   weather.add(WeatherModel?.fromJson(item));
         // }
         print("5day" + newWeather.toString());
         return newWeather;
       } else {
-        throw Exception('Gagal Get News');
+        throw Exception('Gagal mengambil data cuaca');
       }
     } on Exception catch (e) {
       print(e.toString());
@@ -76,5 +74,4 @@ class WeatherService {
       // TODO
     }
   }
-
 }
