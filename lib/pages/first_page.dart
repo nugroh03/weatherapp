@@ -249,7 +249,7 @@ class _FirstPageState extends State<FirstPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kota',
+                      'Provinsi',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
