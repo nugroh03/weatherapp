@@ -260,14 +260,14 @@ class _FirstPageState extends State<FirstPage> {
                       child: TextFormField(
                         controller: _kotaController,
                         validator: (val) {
-                          if (val!.length == 0) return 'Masukkan Kota';
+                          if (val!.length == 0) return 'Masukkan Provinsi';
                         },
                         focusNode: focusNode,
                         onEditingComplete: onEditingComplete,
                         decoration: InputDecoration(
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
-                          hintText: 'Pilih Kota',
+                          hintText: 'Pilih Provinsi',
                           hintStyle: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
@@ -358,7 +358,7 @@ class _FirstPageState extends State<FirstPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kecamatan',
+                      'Kota/Kabupaten',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -369,7 +369,8 @@ class _FirstPageState extends State<FirstPage> {
                       child: TextFormField(
                         controller: _kecamatanController,
                         validator: (val) {
-                          if (val!.length == 0) return 'Masukkan kecamatan';
+                          if (val!.length == 0)
+                            return 'Masukkan Kota/Kabupaten';
                         },
                         focusNode: focusNode,
                         onEditingComplete: onEditingComplete,
@@ -377,7 +378,7 @@ class _FirstPageState extends State<FirstPage> {
                           contentPadding:
                               EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 5.0),
                           suffixIcon: Icon(Icons.arrow_drop_down),
-                          hintText: 'Pilih Kecamatan',
+                          hintText: 'Pilih Kota/Kabupaten',
                           hintStyle: TextStyle(fontSize: 16),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
