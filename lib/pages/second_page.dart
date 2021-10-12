@@ -87,11 +87,11 @@ class _SecondPageState extends State<SecondPage> {
 
   String greetingMessage() {
     var timeNow = DateTime.now().hour;
-    if (timeNow <= 12) {
+    if (timeNow <= 10) {
       return 'Selamat Pagi';
-    } else if ((timeNow > 12) && (timeNow <= 16)) {
+    } else if ((timeNow > 10) && (timeNow <= 15)) {
       return 'Selamat Siang';
-    } else if ((timeNow > 16) && (timeNow < 20)) {
+    } else if ((timeNow > 15) && (timeNow < 18)) {
       return 'Selamat Sore';
     } else {
       return 'Selamat Malam';
@@ -369,7 +369,7 @@ class _SecondPageState extends State<SecondPage> {
         child: DraggableScrollableSheet(
             initialChildSize: 0.12,
             minChildSize: 0.12,
-            maxChildSize: 0.7,
+            maxChildSize: 0.65,
             builder: (BuildContext c, s) {
               return Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
