@@ -107,8 +107,6 @@ class _SecondPageState extends State<SecondPage> {
     var format2 = new DateFormat('hh');
     int toWelcome = int.parse(format2.format(date1));
 
-    print("coba" + toWelcome.toString());
-
     setState(() {
       dayNow = daynows.toString();
       tempCelcius = (weathertoday!.main!["temp"] - 273.15).toStringAsFixed(2);
