@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -476,7 +477,8 @@ class _FirstPageState extends State<FirstPage> {
           body: Container(
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
-              child: Container(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
                 child: Form(
                   key: formKey,
                   child: Column(
@@ -514,20 +516,8 @@ class _FirstPageState extends State<FirstPage> {
                       SizedBox(
                         height: 20,
                       ),
+                      Spacer(),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 30),
-                        child: Text(
-                          'Isi data untuk dapat melanjutkan!',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height - (270),
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
@@ -536,9 +526,20 @@ class _FirstPageState extends State<FirstPage> {
                                 topLeft: Radius.circular(20),
                                 topRight: Radius.circular(20))),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
                               height: 50,
+                            ),
+                            Container(
+                              child: Text(
+                                'Isi data untuk dapat melanjutkan!',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
                             ),
                             inputlogin(),
                             SizedBox(
@@ -559,6 +560,7 @@ class _FirstPageState extends State<FirstPage> {
                                         )
                                       : signin()),
                             ),
+                            SizedBox(height: 180)
                           ],
                         ),
                       )

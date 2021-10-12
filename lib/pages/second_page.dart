@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:weather_app/constans.dart';
 import 'package:weather_app/model/weather_model.dart';
 import 'package:weather_app/model/weathertoday_model.dart';
+import 'package:weather_app/pages/first_page.dart';
 import 'package:weather_app/service/weather.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/widget/detailtoday.dart';
@@ -142,7 +143,13 @@ class _SecondPageState extends State<SecondPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              child: Icon(Icons.arrow_back_ios),
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => FirstPage()),
+                        (Route<dynamic> route) => false);
+                  },
+                  child: Icon(Icons.arrow_back_ios)),
             ),
             Expanded(
               child: Container(
@@ -191,24 +198,28 @@ class _SecondPageState extends State<SecondPage> {
               child: Container(
                 height: 140,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
-                        alignment: Alignment.bottomCenter,
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.bottomRight,
                         height: 50,
                         child: Text(
                           '$welcome, ${widget.name}',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         )),
                     Expanded(
                       child: Container(
-                          alignment: Alignment.topCenter,
+                          alignment: Alignment.topRight,
                           padding: EdgeInsets.only(top: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(tempCelcius!,
-                                  style: TextStyle(fontSize: 50)),
+                                  style: TextStyle(fontSize: 60)),
                               SizedBox(
                                 width: 5,
                               ),
@@ -236,7 +247,11 @@ class _SecondPageState extends State<SecondPage> {
                 ),
               ),
             ),
+            SizedBox(
+              width: 20,
+            ),
             Container(
+              margin: EdgeInsets.only(right: 30),
               width: 150,
               height: 140,
               child: Column(
@@ -385,7 +400,7 @@ class _SecondPageState extends State<SecondPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
                     if (listday!.length > 0) menuDay(0),
                     SizedBox(
