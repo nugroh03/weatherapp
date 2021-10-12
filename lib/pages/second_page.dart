@@ -32,31 +32,56 @@ class _SecondPageState extends State<SecondPage> {
   String? tempCelcius;
   String? welcome;
   bool isLoading = true;
+  String? notif = "Berhasil Masuk";
   List<String?>? listday = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    String? notif = "Berhasil Masuk";
     String newcity = widget.city!.replaceAll("KABUPATEN ", "");
     newcity = newcity.replaceAll("KOTA ", "");
-
     getweathertoday(newcity);
-
     get5day(newcity);
   }
 
   void getweathertoday(city) {
     WeatherService().weathertoday(city).then((value) {
-      List<dynamic>? weee = value!.weather;
-      Map weather = weee![0];
-      setState(() {
-        weathertoday = value;
-        getToday(weathertoday!.dt);
-        //tempCelcius = (weathertoday!.main!["temp"] - 273.15).toStringAsFixed(2);
-        isLoading = false;
-      });
+      if (value != null) {
+        List<dynamic>? weee = value.weather;
+        Map weather = weee![0];
+        setState(() {
+          weathertoday = value;
+          getToday(weathertoday!.dt);
+          //tempCelcius = (weathertoday!.main!["temp"] - 273.15).toStringAsFixed(2);
+          isLoading = false;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.blueAccent,
+              content: Text(
+                notif!,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        });
+      } else {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => FirstPage()),
+            (Route<dynamic> route) => false);
+        setState(() {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: Colors.redAccent,
+              content: Text(
+                'Kota tidak ditemukan',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        });
+      }
     });
   }
 
@@ -171,11 +196,20 @@ class _SecondPageState extends State<SecondPage> {
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    Navigator.of(context).push(new MaterialPageRoute(
-                        builder: (context) => SecondPage(
-                              name: widget.name,
-                              city: widget.city,
-                            )));
+                    isLoading = true;
+                    String newcity = widget.city!.replaceAll("KABUPATEN ", "");
+                    newcity = newcity.replaceAll("KOTA ", "");
+                    notif = "Cuaca berhasil di perbarui";
+
+                    getweathertoday(newcity);
+
+                    get5day(newcity);
+
+                    // Navigator.of(context).push(new MaterialPageRoute(
+                    //     builder: (context) => SecondPage(
+                    //           name: widget.name,
+                    //           city: widget.city,
+                    //         )));
                   });
                 },
                 child: Icon(

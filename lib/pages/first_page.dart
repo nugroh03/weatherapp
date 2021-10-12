@@ -107,44 +107,58 @@ class _FirstPageState extends State<FirstPage> {
       if (connectivityResult == ConnectivityResult.mobile) {
         setState(() {
           connected = true;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.blueAccent,
-              content: Text(
-                'Berhasil Masuk',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SecondPage(
-                      city: _kecamatanController.text,
-                      name: _namaLengkapController.text,
-                    )),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     backgroundColor: Colors.blueAccent,
+          //     content: Text(
+          //       'Berhasil Masuk',
+          //       textAlign: TextAlign.center,
+          //     ),
+          //   ),
+          // );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => SecondPage(
+                        city: _kecamatanController.text,
+                        name: _namaLengkapController.text,
+                      )),
+              (Route<dynamic> route) => false);
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => SecondPage(
+          // city: _kecamatanController.text,
+          // name: _namaLengkapController.text,
+          //           )),
+          // );
         });
       } else if (connectivityResult == ConnectivityResult.wifi) {
         setState(() {
           connected = true;
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.blueAccent,
-              content: Text(
-                'Berhasil Masuk',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SecondPage(
-                      city: _kecamatanController.text,
-                      name: _namaLengkapController.text,
-                    )),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+          //     backgroundColor: Colors.blueAccent,
+          //     content: Text(
+          //       'Berhasil Masuk',
+          //       textAlign: TextAlign.center,
+          //     ),
+          //   ),
+          // );
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => SecondPage(
+                        city: _kecamatanController.text,
+                        name: _namaLengkapController.text,
+                      )),
+              (Route<dynamic> route) => false);
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //       builder: (context) => SecondPage(
+          //             city: _kecamatanController.text,
+          //             name: _namaLengkapController.text,
+          //           )),
+          // );
         });
       } else {
         setState(() {
@@ -287,6 +301,20 @@ class _FirstPageState extends State<FirstPage> {
                               width: 1.0,
                             ),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 1.0,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -394,6 +422,20 @@ class _FirstPageState extends State<FirstPage> {
                               width: 1.0,
                             ),
                           ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                              width: 1.0,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -437,6 +479,20 @@ class _FirstPageState extends State<FirstPage> {
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide(
                       color: Colors.black,
+                      width: 1.0,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 1.0,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(
+                      color: Colors.red,
                       width: 1.0,
                     ),
                   ),
