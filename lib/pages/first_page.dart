@@ -107,15 +107,6 @@ class _FirstPageState extends State<FirstPage> {
       if (connectivityResult == ConnectivityResult.mobile) {
         setState(() {
           connected = true;
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     backgroundColor: Colors.blueAccent,
-          //     content: Text(
-          //       'Berhasil Masuk',
-          //       textAlign: TextAlign.center,
-          //     ),
-          //   ),
-          // );
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (context) => SecondPage(
@@ -123,27 +114,10 @@ class _FirstPageState extends State<FirstPage> {
                         name: _namaLengkapController.text,
                       )),
               (Route<dynamic> route) => false);
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => SecondPage(
-          // city: _kecamatanController.text,
-          // name: _namaLengkapController.text,
-          //           )),
-          // );
         });
       } else if (connectivityResult == ConnectivityResult.wifi) {
         setState(() {
           connected = true;
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     backgroundColor: Colors.blueAccent,
-          //     content: Text(
-          //       'Berhasil Masuk',
-          //       textAlign: TextAlign.center,
-          //     ),
-          //   ),
-          // );
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (context) => SecondPage(
@@ -151,14 +125,6 @@ class _FirstPageState extends State<FirstPage> {
                         name: _namaLengkapController.text,
                       )),
               (Route<dynamic> route) => false);
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => SecondPage(
-          //             city: _kecamatanController.text,
-          //             name: _namaLengkapController.text,
-          //           )),
-          // );
         });
       } else {
         setState(() {
@@ -616,7 +582,7 @@ class _FirstPageState extends State<FirstPage> {
                                         )
                                       : signin()),
                             ),
-                            SizedBox(height: 180)
+                            SizedBox(height: 50)
                           ],
                         ),
                       )
