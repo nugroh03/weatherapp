@@ -251,7 +251,7 @@ class _SecondPageState extends State<SecondPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(tempCelcius!,
-                                  style: TextStyle(fontSize: 60)),
+                                  style: TextStyle(fontSize: 55)),
                               SizedBox(
                                 width: 5,
                               ),
@@ -284,7 +284,7 @@ class _SecondPageState extends State<SecondPage> {
             ),
             Container(
               margin: EdgeInsets.only(right: 30),
-              width: 150,
+              width: 120,
               height: 140,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,

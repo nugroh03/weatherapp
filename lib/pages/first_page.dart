@@ -551,7 +551,7 @@ class _FirstPageState extends State<FirstPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 50,
+                              height: 20,
                             ),
                             Container(
                               child: Text(
@@ -561,7 +561,7 @@ class _FirstPageState extends State<FirstPage> {
                               ),
                             ),
                             SizedBox(
-                              height: 30,
+                              height: 20,
                             ),
                             inputlogin(),
                             SizedBox(
